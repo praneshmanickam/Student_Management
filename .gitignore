@@ -1,0 +1,7 @@
+/student_server
+/student_server.exe
+/btree_test
+/backend/*.o
+/backend/students.dat
+__pycache__/
+*.py[cod]

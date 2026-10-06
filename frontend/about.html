@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About Project · Student Record Management System Using B-Tree</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4ed8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="scrim"></div>
+
+<div class="app">
+
+  <!-- ============================ SIDEBAR ============================ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <strong>Student Record System</strong>
+        <span>Using B-Tree</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Menu</div>
+
+      <a href="index.html" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Dashboard
+      </a>
+
+      <a href="students.html" data-page="students.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Students
+      </a>
+
+      <a href="index.html#add" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        Add Student
+      </a>
+
+      <a href="index.html#search" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        Search Student
+      </a>
+
+      <a href="btree.html" data-page="btree.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4" rx="1.2"/><rect x="2.5" y="17.5" width="7" height="4" rx="1.2"/><rect x="14.5" y="17.5" width="7" height="4" rx="1.2"/><path d="M12 6.5v5M6 17.5v-3h12v3M12 11.5v3"/></svg>
+        B-Tree Visualization
+      </a>
+
+      <a href="about.html" data-page="about.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        About Project
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div>Index: B-Tree · min degree T = 3</div>
+      <div class="chip-row">
+        <span class="chip">max 5 keys</span>
+        <span class="chip">6 children</span>
+        <span class="chip">C backend</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================= MAIN ============================= -->
+  <div class="main">
+
+    <header class="topbar">
+      <button class="hamburger" aria-label="Toggle navigation">☰</button>
+      <div>
+        <h1>About Project</h1>
+        <p class="subtitle">Student Record Management System Using B-Tree</p>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="status-pill"><span class="dot"></span><span data-status-label>connecting…</span></span>
+    </header>
+
+    <div class="content">
+
+      <section class="section" id="about">
+        <div class="panel">
+          <h2 style="font-size:20px;margin-bottom:6px">Student Record Management System Using B-Tree</h2>
+          <p style="color:var(--muted);margin:0 0 16px;font-size:13.5px">
+            A full-stack college project — the index is a hand written B-Tree in C, the interface is
+            plain HTML, CSS and JavaScript.
+          </p>
+
+          <h3 style="font-size:15px;margin-bottom:6px">Description</h3>
+          <p style="margin:0 0 18px;font-size:14px;color:#33456b">
+            This project demonstrates the practical application of the B-Tree data structure for
+            efficient student record management. The Register Number is used as the primary key, and
+            the system supports insertion, searching, updating, deletion, traversal, and B-Tree
+            visualization. Records are stored in <span class="mono">students.dat</span> and are
+            re-indexed into the B-Tree every time the server starts.
+          </p>
+
+          <h3 style="font-size:15px;margin-bottom:8px">Technologies</h3>
+          <div class="btn-row" style="margin-bottom:22px">
+            <span class="tag">C</span>
+            <span class="tag">B-Tree</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">File Handling</span>
+            <span class="tag">HTTP / CGI</span>
+          </div>
+
+          <h3 style="font-size:15px;margin-bottom:8px">How the website talks to the C B-Tree</h3>
+          <div class="code-block"><span class="c">/* every click in the browser becomes a C function call */</span>
+
+<span class="k">ADD</span>    student  →  POST   /api/student            →  btree_insert()
+<span class="k">SEARCH</span> student  →  GET    /api/student?regNo=106  →  search()
+<span class="k">UPDATE</span> student  →  PUT    /api/student?regNo=106  →  btree_update()
+<span class="k">DELETE</span> student  →  DELETE /api/student?regNo=106  →  btree_delete()
+<span class="k">LIST</span>   students →  GET    /api/students           →  btree_traverse()
+<span class="k">TREE</span>   drawing  →  GET    /api/btree              →  btree_to_json()
+<span class="k">STATS</span>  cards    →  GET    /api/stats              →  height / node count</div>
+        </div>
+      </section>
+
+      <section class="section" id="btree-explained">
+        <div class="section-head">
+          <div>
+            <h2>The B-Tree used in this project</h2>
+            <p>Minimum degree T = 3 · maximum 5 keys per node · maximum 6 children per node</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <h3 style="font-size:15px;margin-bottom:10px">Invariants that are always maintained</h3>
+            <ul style="margin:0;padding-left:20px;font-size:13.5px;color:#33456b;line-height:1.9">
+              <li>Keys inside a node are kept sorted.</li>
+              <li>Every node (except the root) holds at least <strong>T − 1 = 2</strong> keys.</li>
+              <li>Every node holds at most <strong>2T − 1 = 5</strong> keys.</li>
+              <li>An internal node with <em>n</em> keys has <em>n + 1</em> children.</li>
+              <li>All leaves are at exactly the same depth — the tree is balanced.</li>
+              <li>The Register Number is the key used for ordering, search, insert and delete.</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3 style="font-size:15px;margin-bottom:10px">Operations implemented in C</h3>
+            <div class="code-block">createNode()          allocate a node
+search()              find a register number
+splitChild()          split a full node
+insertNonFull()       descend + insert
+insert()              public insert
+deleteKey()           public delete
+merge()               merge two nodes
+borrowFromPrevious()  rotate from left sibling
+borrowFromNext()      rotate from right sibling
+fill()                top up a node before descending
+traverse()            in-order walk (sorted list)
+displayTree()         console dump</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="structure">
+        <div class="section-head">
+          <div>
+            <h2>Project structure</h2>
+            <p>B-Tree logic, HTTP server logic and the frontend are kept in separate modules.</p>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="code-block">Student_BTree_Web/
+├── backend/
+│   ├── main.c          <span class="c">// entry point + JSON API routes</span>
+│   ├── btree.c / .h    <span class="c">// the B-Tree data structure (T = 3)</span>
+│   ├── student.c / .h  <span class="c">// student record + validation</span>
+│   ├── storage.c / .h  <span class="c">// students.dat load / save</span>
+│   ├── server.c / .h   <span class="c">// HTTP server (sockets + threads)</span>
+│   └── students.dat    <span class="c">// persistent records</span>
+├── frontend/
+│   ├── index.html      <span class="c">// dashboard + add + search</span>
+│   ├── students.html   <span class="c">// records table, edit, delete</span>
+│   ├── btree.html      <span class="c">// B-Tree visualization</span>
+│   ├── about.html      <span class="c">// this page</span>
+│   ├── css/style.css
+│   └── js/{app,students,btree}.js
+├── test/btree_test.c   <span class="c">// invariant + stress test</span>
+├── Makefile
+├── run.bat
+└── README.md</div>
+        </div>
+      </section>
+
+      <section class="section" id="future">
+        <div class="section-head">
+          <div>
+            <h2>Future enhancements</h2>
+            <p>Ideas that would extend the project</p>
+          </div>
+        </div>
+        <div class="panel">
+          <ul style="margin:0;padding-left:20px;font-size:13.5px;color:#33456b;line-height:1.9">
+            <li>Range queries on Register Number using the ordered leaves of the B-Tree.</li>
+            <li>Animated step-by-step playback of a split, borrow or merge.</li>
+            <li>Department-wise secondary index and CGPA ranking reports.</li>
+            <li>Binary serialisation of <span class="mono">students.dat</span> for larger data sets.</li>
+            <li>Authentication and an admin audit log of every B-Tree operation.</li>
+            <li>Pagination and lazy loading for very large record sets.</li>
+          </ul>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        Student Record Management System Using B-Tree · C backend + B-Tree index · <span data-year></span>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>

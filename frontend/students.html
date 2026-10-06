@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Records · Student Record Management System Using B-Tree</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4ed8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="scrim"></div>
+
+<div class="app">
+
+  <!-- ============================ SIDEBAR ============================ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <strong>Student Record System</strong>
+        <span>Using B-Tree</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Menu</div>
+
+      <a href="index.html" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Dashboard
+      </a>
+
+      <a href="students.html" data-page="students.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Students
+      </a>
+
+      <a href="index.html#add" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        Add Student
+      </a>
+
+      <a href="index.html#search" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        Search Student
+      </a>
+
+      <a href="btree.html" data-page="btree.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4" rx="1.2"/><rect x="2.5" y="17.5" width="7" height="4" rx="1.2"/><rect x="14.5" y="17.5" width="7" height="4" rx="1.2"/><path d="M12 6.5v5M6 17.5v-3h12v3M12 11.5v3"/></svg>
+        B-Tree Visualization
+      </a>
+
+      <a href="about.html" data-page="about.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        About Project
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div>Index: B-Tree · min degree T = 3</div>
+      <div class="chip-row">
+        <span class="chip">max 5 keys</span>
+        <span class="chip">6 children</span>
+        <span class="chip">C backend</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================= MAIN ============================= -->
+  <div class="main">
+
+    <header class="topbar">
+      <button class="hamburger" aria-label="Toggle navigation">☰</button>
+      <div>
+        <h1>Student Records</h1>
+        <p class="subtitle">Sorted by Register Number using B-Tree in-order traversal</p>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="status-pill"><span class="dot"></span><span data-status-label>connecting…</span></span>
+      <button class="btn btn-ghost btn-sm" id="btn-refresh">Refresh</button>
+    </header>
+
+    <div class="content">
+
+      <!-- ================= D. STUDENT RECORDS ================= -->
+      <section class="section" id="records">
+        <div class="section-head">
+          <div>
+            <h2>All Students <span class="tag" id="record-count">0</span></h2>
+            <p>Loaded with <span class="mono">GET /api/students</span> — the C backend walks the B-Tree in order.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="table-toolbar">
+            <div class="field" style="min-width:220px">
+              <label for="quick-search">Quick search by Register Number</label>
+              <input id="quick-search" type="text" inputmode="numeric" placeholder="Type a register number…" autocomplete="off">
+            </div>
+            <div class="grow"></div>
+            <a class="btn btn-primary btn-sm" href="index.html#add">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              Add Student
+            </a>
+          </div>
+
+          <div class="table-wrapper">
+            <table class="data">
+              <thead>
+                <tr>
+                  <th style="width:130px">Register Number</th>
+                  <th>Name</th>
+                  <th style="width:150px">Department</th>
+                  <th style="width:190px">CGPA</th>
+                  <th style="width:170px">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="student-tbody">
+                <tr><td colspan="5"><div class="skeleton" style="height:22px"></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="table-empty" class="empty-state" style="display:none">
+            <strong>No students in the B-Tree</strong>
+            Add a student to start building the index.
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OPERATION VISUALIZATION ============ -->
+      <section class="section" id="operation">
+        <div class="section-head">
+          <div>
+            <h2>Operation Visualization</h2>
+            <p>The exact B-Tree steps performed in C for the last edit or delete.</p>
+          </div>
+        </div>
+        <div class="panel op-panel">
+          <div id="operation-flow">
+            <div class="op-empty">Edit or delete a student to see the B-Tree operations here.</div>
+          </div>
+          <div id="operation-compare"></div>
+        </div>
+      </section>
+
+      <!-- ============ CURRENT B-TREE ============ -->
+      <section class="section" id="btree-preview">
+        <div class="section-head">
+          <div>
+            <h2>Current B-Tree</h2>
+            <p>Rebuilt from the C B-Tree after every change.</p>
+          </div>
+          <div class="grow"></div>
+          <a class="btn btn-ghost btn-sm" href="btree.html">Open full visualization</a>
+        </div>
+        <div class="panel">
+          <div class="tree-stage" id="tree-stage">
+            <div class="empty-state">Loading the B-Tree from the C backend…</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- ==================== EDIT MODAL ==================== -->
+<div class="modal-backdrop" id="edit-modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="edit-title">
+    <div class="modal-head">
+      <div class="m-icon edit">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4l10-10-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></svg>
+      </div>
+      <div>
+        <h3 id="edit-title">Update Student</h3>
+        <p>The Register Number is the B-Tree key and cannot be changed.</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="warn-box" id="edit-key-note">Register Number: <strong>—</strong></div>
+      <form id="edit-form" novalidate>
+        <div class="field" id="ef-name" style="margin-bottom:14px">
+          <label for="edit-name">Student Name <span class="req">*</span></label>
+          <input id="edit-name" type="text" autocomplete="off">
+          <div class="err"></div>
+        </div>
+        <div class="field" id="ef-dept" style="margin-bottom:14px">
+          <label for="edit-dept">Department <span class="req">*</span></label>
+          <input id="edit-dept" type="text" autocomplete="off">
+          <div class="err"></div>
+        </div>
+        <div class="field" id="ef-cgpa">
+          <label for="edit-cgpa">CGPA <span class="req">*</span></label>
+          <input id="edit-cgpa" type="text" inputmode="decimal" autocomplete="off">
+          <div class="err"></div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close="edit-modal">Cancel</button>
+      <button class="btn btn-primary" id="edit-save">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DELETE MODAL ==================== -->
+<div class="modal-backdrop" id="delete-modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="delete-title" style="max-width:420px">
+    <div class="modal-head">
+      <div class="m-icon danger">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12M9 7V5h6v2M8 7l1 12h6l1-12"/><path d="M11 11v5M13 11v5"/></svg>
+      </div>
+      <div>
+        <h3 id="delete-title">Delete Student</h3>
+        <p>This removes the record from the B-Tree and from students.dat.</p>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="warn-box" id="delete-question">Are you sure you want to delete this student?</div>
+      <dl class="kv">
+        <dt>Register Number</dt><dd id="delete-reg">—</dd>
+        <dt>Name</dt><dd id="delete-name">—</dd>
+        <dt>Department</dt><dd id="delete-dept">—</dd>
+        <dt>CGPA</dt><dd id="delete-cgpa">—</dd>
+      </dl>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close="delete-modal">Cancel</button>
+      <button class="btn btn-danger" id="delete-confirm">Yes, Delete</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+
+<script src="js/app.js"></script>
+<script src="js/students.js"></script>
+</body>
+</html>

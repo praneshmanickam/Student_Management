@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · Student Record Management System Using B-Tree</title>
+<meta name="description" content="Student Record Management System using a B-Tree index implemented in C.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4ed8'/%3E%3Ctext x='16' y='22' font-family='Arial' font-size='15' font-weight='bold' fill='white' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+<div class="scrim"></div>
+
+<div class="app">
+
+  <!-- ============================ SIDEBAR ============================ -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-text">
+        <strong>Student Record System</strong>
+        <span>Using B-Tree</span>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Menu</div>
+
+      <a href="index.html" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Dashboard
+      </a>
+
+      <a href="students.html" data-page="students.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        Students
+      </a>
+
+      <a href="index.html#add" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+        Add Student
+      </a>
+
+      <a href="index.html#search" data-page="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+        Search Student
+      </a>
+
+      <a href="btree.html" data-page="btree.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4" rx="1.2"/><rect x="2.5" y="17.5" width="7" height="4" rx="1.2"/><rect x="14.5" y="17.5" width="7" height="4" rx="1.2"/><path d="M12 6.5v5M6 17.5v-3h12v3M12 11.5v3"/></svg>
+        B-Tree Visualization
+      </a>
+
+      <a href="about.html" data-page="about.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>
+        About Project
+      </a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div>Index: B-Tree · min degree T = 3</div>
+      <div class="chip-row">
+        <span class="chip">max 5 keys</span>
+        <span class="chip">6 children</span>
+        <span class="chip">C backend</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================= MAIN ============================= -->
+  <div class="main">
+
+    <header class="topbar">
+      <button class="hamburger" aria-label="Toggle navigation">☰</button>
+      <div>
+        <h1>Dashboard</h1>
+        <p class="subtitle">Student Record Management System Using B-Tree</p>
+      </div>
+      <div class="topbar-spacer"></div>
+      <span class="status-pill"><span class="dot"></span><span data-status-label>connecting…</span></span>
+      <button class="btn btn-ghost btn-sm" id="btn-refresh-all">Refresh</button>
+    </header>
+
+    <div class="content">
+
+      <!-- ===================== A. DASHBOARD ===================== -->
+      <section class="section" id="dashboard">
+        <div class="section-head">
+          <div>
+            <h2>B-Tree Statistics</h2>
+            <p>Live figures read from the B-Tree held in memory by the C backend.</p>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="stat-card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 17.5V19"/><circle cx="10" cy="8" r="3.2"/><path d="M20 19v-1.5a3.5 3.5 0 0 0-2.6-3.4M15.5 5.2a3.2 3.2 0 0 1 0 5.6"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-total">–</div>
+              <div class="label">Total Students</div>
+            </div>
+          </div>
+
+          <div class="stat-card accent">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/><circle cx="12" cy="12" r="3.4"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-height">–</div>
+              <div class="label">B-Tree Height</div>
+            </div>
+          </div>
+
+          <div class="stat-card ok">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="4" width="7" height="6" rx="1.5"/><rect x="8.5" y="15" width="7" height="5" rx="1.5"/><path d="M6.5 10v2.5h11V10M12 12.5V15"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-nodes">–</div>
+              <div class="label">B-Tree Nodes</div>
+            </div>
+          </div>
+
+          <div class="stat-card warn">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h9"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-maxkeys">–</div>
+              <div class="label">Max Keys in a Node</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18V6M4 6l7 6 4-3 5 4"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-mindegree">–</div>
+              <div class="label">Minimum Degree (T)</div>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A2.5 2.5 0 0 1 6.5 5H19l-2.5 5L19 15H6.5A2.5 2.5 0 0 1 4 12.5z"/></svg>
+            </div>
+            <div>
+              <div class="value" id="stat-maxkeys-cap">–</div>
+              <div class="label">Max Keys Allowed</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============== B-TREE VISUALIZATION (preview) ============== -->
+      <section class="section" id="btree">
+        <div class="section-head">
+          <div>
+            <h2>Current B-Tree</h2>
+            <p>Generated from the real B-Tree in the C backend (<span class="mono">GET /api/btree</span>).</p>
+          </div>
+          <div class="grow"></div>
+          <a class="btn btn-ghost btn-sm" href="btree.html">Open full visualization</a>
+        </div>
+
+        <div class="panel">
+          <div class="tree-stage" id="tree-stage">
+            <div class="empty-state">Loading the B-Tree from the C backend…</div>
+          </div>
+          <div class="legend">
+            <span><i class="root"></i> root node</span>
+            <span><i class="internal"></i> internal node</span>
+            <span><i class="leaf"></i> leaf node (all leaves at the same level)</span>
+          </div>
+          <div class="footer-note">Register Number is the B-Tree key · keys are kept sorted inside every node.</div>
+        </div>
+      </section>
+
+      <!-- ============ OPERATION VISUALIZATION ============ -->
+      <section class="section" id="operation">
+        <div class="section-head">
+          <div>
+            <h2>Operation Visualization</h2>
+            <p>Every insert / update / delete reports the B-Tree operations performed by the C backend.</p>
+          </div>
+        </div>
+
+        <div class="panel op-panel">
+          <div>
+            <div id="operation-flow">
+              <div class="op-empty">Add or delete a student and the B-Tree operations will be listed here.</div>
+            </div>
+          </div>
+          <div id="operation-compare"></div>
+        </div>
+      </section>
+
+      <!-- ===================== B. ADD STUDENT ===================== -->
+      <section class="section" id="add">
+        <div class="section-head">
+          <div>
+            <h2>Add Student</h2>
+            <p>The record is inserted into the B-Tree in C using <span class="mono">btree_insert()</span>.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form id="add-form" novalidate>
+            <div class="form-grid">
+              <div class="field" id="f-reg">
+                <label for="add-reg">Register Number <span class="req">*</span></label>
+                <input id="add-reg" name="regNo" type="text" inputmode="numeric" placeholder="e.g. 106" autocomplete="off">
+                <div class="hint">Numeric, unique — used as the B-Tree key.</div>
+                <div class="err"></div>
+              </div>
+
+              <div class="field" id="f-name">
+                <label for="add-name">Student Name <span class="req">*</span></label>
+                <input id="add-name" name="name" type="text" placeholder="e.g. Gokul" autocomplete="off">
+                <div class="err"></div>
+              </div>
+
+              <div class="field" id="f-dept">
+                <label for="add-dept">Department <span class="req">*</span></label>
+                <input id="add-dept" name="department" type="text" placeholder="e.g. CSE" autocomplete="off">
+                <div class="err"></div>
+              </div>
+
+              <div class="field" id="f-cgpa">
+                <label for="add-cgpa">CGPA <span class="req">*</span></label>
+                <input id="add-cgpa" name="cgpa" type="text" inputmode="decimal" placeholder="0 – 10" autocomplete="off">
+                <div class="hint">Must be between 0 and 10.</div>
+                <div class="err"></div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="add-submit">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                Add Student
+              </button>
+              <button type="reset" class="btn btn-ghost" id="add-clear">Clear</button>
+              <button type="button" class="btn btn-ghost btn-sm" id="add-sample">Insert sample records</button>
+              <span class="form-note" id="add-note"></span>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ===================== C. SEARCH STUDENT ===================== -->
+      <section class="section" id="search">
+        <div class="section-head">
+          <div>
+            <h2>Search Student</h2>
+            <p>Uses the B-Tree search routine in C (<span class="mono">search()</span>) — no linear scan.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <form class="inline-form" id="search-form" novalidate>
+            <div class="field" id="f-search">
+              <label for="search-reg">Enter Register Number</label>
+              <input id="search-reg" type="text" inputmode="numeric" placeholder="e.g. 106" autocomplete="off">
+              <div class="err"></div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+              Search
+            </button>
+            <button type="button" class="btn btn-ghost" id="search-clear">Clear</button>
+          </form>
+
+          <div id="search-result" style="margin-top:16px">
+            <div class="op-empty">Search for a register number to see the record stored in the B-Tree.</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap"></div>
+
+<script src="js/app.js"></script>
+<script src="js/students.js"></script>
+</body>
+</html>
